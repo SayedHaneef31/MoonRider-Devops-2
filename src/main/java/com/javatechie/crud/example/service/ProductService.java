@@ -32,6 +32,10 @@ public class ProductService {
         return repository.findByName(name);
     }
 
+    public List<Product> searchProductsByKeyword(String keyword) {
+        return repository.findByNameContainingIgnoreCase(keyword);
+    }
+
     public String deleteProduct(int id) {
         repository.deleteById(id);
         return "product removed !! " + id;
