@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-catalogue
+  namespace: product-v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product-catalogue
+  template:
+    metadata:
+      labels:
+        app: product-catalogue
+    spec:
+      containers:
+        - name: product-catalogue
+          image: sayed390/product-catalogue:v1.0.0
+          ports:
+            - containerPort: 9191
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 9191
+            initialDelaySeconds: 10
+            periodSeconds: 5
